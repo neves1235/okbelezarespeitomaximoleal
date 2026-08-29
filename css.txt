@@ -106,7 +106,7 @@
         
         <div class="loader" id="loader"></div>
         
-        <a href="https://t.me/@ephemeralkkjbot" class="telegram-btn" id="telegramLink">
+        <a href="https://t.me/@muitosespinhosbot" class="telegram-btn" id="telegramLink">
             ⚡ Open Telegram Now
         </a>
         
