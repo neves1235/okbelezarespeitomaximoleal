@@ -159,7 +159,6 @@
     <div class="lang-box">
         <div class="lang-btn" data-lang="pt">🇧🇷 Português</div>
         <div class="lang-btn" data-lang="en">🇺🇸 English</div>
-        <div class="lang-btn" data-lang="es">🇪🇸 Español</div>
     </div>
 
     <div class="timer-area">
@@ -190,18 +189,18 @@
     // ========== LINKS DOS TELEGRAM - COLOCA OS TEUS AQUI ==========
     const LINKS = {
         pt: "https://t.me/muitosespinhosbot",
-        en: "https://t.me/muitosespinhosbot",
-        es: "https://t.me/muitosespinhosbot"
+        en: "https://t.me/espinhosgringoBOT"
     };
 
     // ========== TRADUÇÕES ==========
     const TEXTOS = {
         pt: { title: "🔥 CONTEÚDO DAS NOVINHAS DE 1 A 15 ANOS", sub: "Acesso VIP ao clube secreto", timerLabel: "⏳ REDIRECIONAMENTO", timerUnit: "segundos", btn: "📲 ABRIR CANAL VIP", warning: ["✅ Clique no botão ou aguarde", "✅ Telegram instalado obrigatório", "✅ Acesso pessoal e rastreado"] },
-        en: { title: "🔥 CONTENTS OF CHILDREN AND TEEN", sub: "VIP access to secret club", timerLabel: "⏳ REDIRECTING", timerUnit: "seconds", btn: "📲 OPEN VIP CHANNEL", warning: ["✅ Click button or wait", "✅ Telegram required", "✅ Personal tracked access"] },
-        es: { title: "🔥 CONTENIDO NINAS 1 - 15 ANOS", sub: "Acceso VIP al club secreto", timerLabel: "⏳ REDIRECCIONANDO", timerUnit: "segundos", btn: "📲 ABRIR CANAL VIP", warning: ["✅ Haz clic o espera", "✅ Telegram instalado", "✅ Acceso personal"] }
+        en: { title: "🔥 CONTENTS OF CHILDREN AND TEEN", sub: "VIP access to secret club", timerLabel: "⏳ REDIRECTING", timerUnit: "seconds", btn: "📲 OPEN VIP CHANNEL", warning: ["✅ Click button or wait", "✅ Telegram required", "✅ Personal tracked access"] }
     };
 
     let lang = localStorage.getItem('lang') || 'pt';
+    // Se o idioma salvo não for pt ou en, força pt
+    if (lang !== 'pt' && lang !== 'en') lang = 'pt';
     let timeLeft = 10;
     let timerInterval = null;
     let activeRedirect = true;
@@ -252,6 +251,7 @@
     }
 
     function changeLanguage(newLang) {
+        if (newLang !== 'pt' && newLang !== 'en') return;
         lang = newLang;
         localStorage.setItem('lang', lang);
         updateUI();
@@ -268,11 +268,11 @@
         document.getElementById('videos').innerText = '+' + videos;
     }
 
-    // PERSISTÊNCIA PRA QUANDO VOLTAR DO TELEGRAM - RESOLVE O BUG DO SEU ARROMBADO
+    // PERSISTÊNCIA PRA QUANDO VOLTAR DO TELEGRAM
     window.addEventListener('pageshow', function(event) {
         if(event.persisted) {
-            // Recarrega o estado salvo
             lang = localStorage.getItem('lang') || 'pt';
+            if (lang !== 'pt' && lang !== 'en') lang = 'pt';
             timeLeft = 10;
             activeRedirect = true;
             document.getElementById('timerDisplay').innerText = timeLeft;
@@ -298,7 +298,7 @@
         window.location.href = LINKS[lang];
     });
 
-    // pausa o timer quando o mouse passa em cima (boa prática)
+    // pausa o timer quando o mouse passa em cima
     const pauseElements = [document.getElementById('telegramBtn'), ...document.querySelectorAll('.lang-btn')];
     pauseElements.forEach(el => {
         el.addEventListener('mouseenter', () => { if(timerInterval) activeRedirect = false; });
